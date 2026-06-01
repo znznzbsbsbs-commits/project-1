@@ -1,0 +1,1 @@
+{"service":"moderation","routes":["POST /api/reports","GET /api/reports","PATCH /api/reports/:id","GET /api/admin/stats"],"tables":["reports","audit_logs"],"features":["report creation","moderator review","resolution audit log","admin platform counters"]}

@@ -1,29 +1,27 @@
-# Liquid Messenger Platform
+# Liquid Messenger architecture
 
-Production-ready messenger monorepo with a liquid-glass web client, Node.js API gateway, PostgreSQL persistence, WebSocket realtime events, uploads, notifications, contacts, groups, channels, calls signaling, moderation reports and Docker hosting configuration.
+This repository implements the requested physical structure as a deployable monorepo. The runnable production path is `apps/web` plus `backend/gateway`, with PostgreSQL migrations in `database/migrations` and Docker/Nginx deployment files.
 
-## Quick start
+## Implemented capabilities
+- Web landing/auth shell: login, registration, forgot/reset API, PWA manifest and service worker.
+- Chat interface copied from the supplied liquid-glass/3D HTML style.
+- JWT access and refresh tokens, logout, password hashing, password reset tokens, roles.
+- Users, profiles, privacy/settings, contacts, blocking, device sessions and push subscriptions.
+- Private chats, groups, channels, membership management, message history, editing, deletion, pinning, reactions, replies/thread fields, saved messages, read/delivery receipts and full-text search.
+- WebSocket realtime messages, typing indicators, presence and WebRTC signaling events.
+- Voice/video call records, call participants and STUN config returned to the client.
+- File uploads with typed attachments and public serving.
+- Notifications, reports, moderation/admin stats.
+- PostgreSQL schema, Docker Compose, Nginx reverse proxy, health checks and deploy script.
 
+## Run locally
 ```bash
 cp .env.example .env
 docker compose up --build
-```
-
-Then open <http://localhost:8080>. To create seed users and a starter chat:
-
-```bash
+# Optional seed data:
 docker compose exec app npm run seed
 ```
-
-Demo password for seeded users: `Password123!`.
-
-## Structure
-
-- `apps/web/public` — responsive PWA web client copied from the supplied 3D glass HTML style.
-- `backend/gateway/src` — Express API, JWT auth, WebSocket realtime, calls signaling, uploads and admin/moderation endpoints.
-- `database/migrations` — PostgreSQL schema for users, profiles, sessions, chats, messages, calls, notifications, reports, settings and audit logs.
-- `docker-compose.yml`, `Dockerfile`, `nginx/default.conf` — hosting-ready deployment assets.
-- `docs/ARCHITECTURE.md` — implemented feature map and operations notes.
+Open http://localhost:8080. Seed users use password `Password123!`.
 
 
 ## Security and performance hardening
@@ -31,7 +29,7 @@ Demo password for seeded users: `Password123!`.
 - Strict Helmet security headers and CSP, disabled `x-powered-by`, production JWT secret enforcement and restricted CORS.
 - Separate auth, HTTP and WebSocket rate limits; WebSocket heartbeat, max payload and membership checks.
 - PostgreSQL `LISTEN/NOTIFY` realtime fanout so several Node workers/replicas can deliver chat events without a single in-memory bottleneck.
-- Indexed user search (`/api/search/users`) with prefix/trigram indexes, plus debounced/cancellable frontend search and searched member selection for group creation.
+- Indexed user search (`/api/search/users`) with prefix/trigram indexes, plus debounced/cancellable frontend search.
 - Upload MIME allow-list, sanitized filenames and cached immutable static/upload assets.
 - Nginx keepalive, least-connection upstream, WebSocket timeouts and static upload caching for 500+ active users.
 - Offline and high-ping states show an automatic reconnect surface; full offline mode includes a local mini-game while the real health checks continue independently.
@@ -66,8 +64,15 @@ Demo password for seeded users: `Password123!`.
 - Each backend service folder now contains a `service.json` contract describing real routes, data tables, realtime events and security controls.
 - `npm run security:audit` checks critical hardening controls and rejects disabled CSP, emoji UI regressions and malformed service contracts.
 
-## Extensions
+## Extension platform
 
-The platform includes an extension host for Web and Electron. Developers can add same-origin extension modules under `apps/web/public/plugins/<id>/` with `manifest.json` and an ES module exporting `activate(api)`. The official SDK surface includes `api.ui`, `api.commands`, `api.events`, `api.storage`, `api.theme`, `api.notifications` and high-level `api.calls` actions.
+Liquid Messenger now has a first-class extension platform shared by Web and Electron:
 
-Users manage extensions in Settings -> Extensions: install official marketplace items, enable/disable/remove them, report an extension, enable Safe Mode or roll back the last extension change. Extension state is persisted in PostgreSQL and activation is skipped in Safe Mode.
+- `apps/web/public/extensions.js` is the browser Extension Host. It validates manifests, enforces permission-gated SDK APIs, loads same-origin extension modules, owns UI slots, commands, events, storage, themes, notifications and high-level call actions.
+- `app/core`, `app/extensions` and `app/sdk` contain reusable source modules for future plugin tooling: event bus, namespaced storage, manifest validation and permission descriptions.
+- `apps/web/public/plugins/*` contains official extensions that double as working examples: Core Tools, Theme Pack and Safe Mode Controller.
+- `extension_marketplace`, `user_extensions`, `extension_history` and `extension_reports` persist marketplace entries, installs, rollback history and abuse reports.
+- `/api/extensions`, `/api/extensions/install/:id`, `/api/extensions/:id/enable`, `/api/extensions/:id/disable`, `/api/extensions/:id`, `/api/extensions/safe-mode`, `/api/extensions/rollback-last` and report/history endpoints power the manager UI.
+- Settings -> Extensions is the recovery and marketplace UI. Safe Mode skips plugin activation without deleting installed files; rollback disables the last installed/enabled extension.
+
+Extensions never receive raw Node/Electron access or raw call media. Call permissions expose only high-level actions such as mute, camera toggle, screen share and participant listing.

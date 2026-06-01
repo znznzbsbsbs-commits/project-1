@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Liquid Messenger Admin</title>
+  <link rel="stylesheet" href="/admin/styles.css">
+</head>
+<body>
+  <main class="admin-shell">
+    <section class="admin-card auth" id="authCard">
+      <div class="logo"><svg viewBox="0 0 24 24"><path d="M4 6h16v10H8l-4 4V6z"/><path d="M8 10h8"/><path d="M8 13h5"/></svg></div>
+      <h1>Admin Panel</h1>
+      <p>Войдите под moderator/admin аккаунтом</p>
+      <form id="loginForm">
+        <input name="login" placeholder="Email или username" required>
+        <input name="password" type="password" placeholder="Пароль" required>
+        <button>Войти</button>
+      </form>
+      <div id="authError" class="error"></div>
+    </section>
+
+    <section class="admin-card dashboard hidden" id="dashboard">
+      <header>
+        <div>
+          <h1>Liquid Admin</h1>
+          <p id="adminUser">Moderation console</p>
+        </div>
+        <button id="logout">Выйти</button>
+      </header>
+      <div class="stats" id="stats"></div>
+      <div class="toolbar">
+        <button id="refresh">Обновить</button>
+        <input id="userSearch" placeholder="Поиск пользователя">
+      </div>
+      <div class="grid">
+        <section>
+          <h2>Reports</h2>
+          <div id="reports" class="list"></div>
+        </section>
+        <section>
+          <h2>Users</h2>
+          <div id="users" class="list"></div>
+        </section>
+      </div>
+    </section>
+  </main>
+  <script src="/admin/app.js"></script>
+</body>
+</html>

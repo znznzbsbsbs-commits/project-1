@@ -1,0 +1,1 @@
+{"service":"uploads","routes":["POST /api/uploads","POST /api/messages/:id/attachments/:attachmentId","GET /uploads/:file"],"tables":["attachments"],"security":["authenticated upload","MIME allow-list","file size limit","sanitized filenames","immutable static serving"]}
