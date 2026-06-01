@@ -1,0 +1,11 @@
+{
+  "id": "core-tools",
+  "name": "Core Tools",
+  "version": "1.0.0",
+  "author": "Liquid Messenger Team",
+  "trust": "official",
+  "category": "Productivity",
+  "description": "Command palette and quick actions for chats, files and calls.",
+  "permissions": ["ui", "commands", "events", "notifications", "voice", "microphone", "camera", "screenshare", "call-events"],
+  "entry": "index.js"
+}

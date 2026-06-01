@@ -1,0 +1,11 @@
+{
+  "id": "safe-mode-controller",
+  "name": "Safe Mode Controller",
+  "version": "1.0.0",
+  "author": "Liquid Messenger Team",
+  "trust": "official",
+  "category": "Security",
+  "description": "Recovery controls for disabling extensions without deleting user data.",
+  "permissions": ["ui", "events", "storage", "notifications"],
+  "entry": "index.js"
+}

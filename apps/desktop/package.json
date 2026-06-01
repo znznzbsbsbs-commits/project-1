@@ -1,0 +1,36 @@
+{
+  "name": "liquid-messenger-desktop",
+  "version": "1.0.0",
+  "private": true,
+  "main": "src/main.js",
+  "scripts": {
+    "start": "electron src/main.js",
+    "start:embedded": "LIQUID_MESSENGER_EMBED_SERVER=true electron src/main.js",
+    "start:remote": "LIQUID_MESSENGER_URL=http://localhost:8080 electron src/main.js",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
+  "dependencies": {
+    "electron": "^33.0.0"
+  },
+  "devDependencies": {
+    "electron-builder": "^25.1.8"
+  },
+  "build": {
+    "appId": "com.liquid.messenger",
+    "productName": "Liquid Messenger",
+    "files": [
+      "src/**/*",
+      "package.json"
+    ],
+    "extraResources": [
+      "../../apps/web/public/**/*",
+      "../../backend/gateway/src/**/*",
+      "../../database/migrations/**/*",
+      "../../package.json"
+    ],
+    "directories": {
+      "output": "dist"
+    }
+  }
+}

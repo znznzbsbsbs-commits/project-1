@@ -1,0 +1,11 @@
+{
+  "id": "theme-pack",
+  "name": "Theme Pack",
+  "version": "1.0.0",
+  "author": "Liquid Messenger Team",
+  "trust": "official",
+  "category": "Themes",
+  "description": "Official neon and minimal theme examples for extension developers.",
+  "permissions": ["ui", "theme", "storage"],
+  "entry": "index.js"
+}

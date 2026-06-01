@@ -1,0 +1,30 @@
+{
+  "name": "liquid-messenger-platform",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Production-ready Liquid Messenger web client and Node/PostgreSQL realtime backend.",
+  "scripts": {
+    "dev": "node backend/gateway/src/server.js",
+    "start": "NODE_ENV=production node scripts/start-cluster.js",
+    "migrate": "node backend/gateway/src/migrate.js",
+    "seed": "node backend/gateway/src/seed.js",
+    "check": "node --check backend/gateway/src/server.js && node --check backend/gateway/src/db.js && node --check backend/gateway/src/migrate.js && node --check backend/gateway/src/seed.js && node --check apps/web/public/app.js && node --check apps/web/public/sw.js && test -s apps/web/public/legal.html && node --check apps/web/public/extensions.js && node --check apps/web/public/plugins/core-tools/index.js && node --check apps/web/public/plugins/theme-pack/index.js && node --check apps/web/public/plugins/safe-mode-controller/index.js && node --check scripts/start-cluster.js && node --check apps/admin/public/app.js && node --check apps/desktop/src/main.js && node --check apps/desktop/src/preload.js && node --check scripts/security-audit.js && node --check app/extensions/permissions.js && node --check app/extensions/manifest.js && node --check app/core/events.js && node --check app/core/storage.js && node --check app/core/network.js && node --check app/sdk/index.js",
+    "test": "node --test backend/gateway/src/*.test.js",
+    "security:audit": "node scripts/security-audit.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "compression": "^1.7.4",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "helmet": "^8.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^1.4.5-lts.1",
+    "pg": "^8.13.1",
+    "rate-limiter-flexible": "^5.0.5",
+    "uuid": "^11.0.5",
+    "ws": "^8.18.0"
+  },
+  "devDependencies": {}
+}

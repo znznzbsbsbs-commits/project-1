@@ -1,0 +1,1 @@
+{"service":"notifications","routes":["GET /api/notifications","POST /api/notifications/read","POST /api/push-subscriptions","DELETE /api/push-subscriptions/:id"],"tables":["notifications","push_subscriptions"],"features":["realtime user_events fanout","unread index","web push subscription storage","mark all read"]}

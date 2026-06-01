@@ -1,0 +1,1 @@
+{"service":"search","routes":["GET /api/search/users","GET /api/search/messages"],"indexes":["users_username_lower_idx","users_email_lower_idx","users_username_trgm_idx","profiles_display_name_trgm_idx","messages_body_search_idx"],"features":["prefix user search","exact email search","full text message search scoped to chat membership"]}
